@@ -1,8 +1,7 @@
-import React from 'react'
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addToPaste, updateToPaste } from "../Redux/pasteSlice";
+
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { toast } from "react-hot-toast";
 import { Copy } from "lucide-react";
 
@@ -18,7 +17,7 @@ const {id} = useParams();
   
   //const paste = allpastes.filter((p) => p._id === id)[0];
 
-const paste = allpastes.find((p) => p._id === id);
+const paste = allpastes.find((p) => String(p._id) === String(id));
     // useEffect(() => {
     //     if (pasteId) {
     //         const paste = allpastes.find((p) => p._id === pasteId);
@@ -44,7 +43,14 @@ const paste = allpastes.find((p) => p._id === id);
     //     setTitle("");
     //     setValue("");
     //     setSearchparams({});
-    // }
+  // }
+    if (!paste) {
+      return (
+        <div className="flex min-h-[70vh] items-center justify-center">
+          <h2 className="text-2xl font-bold text-red-600">Paste not found</h2>
+        </div>
+      );
+    }
 
     return (
       <div className=" bg-slate-100 place-content-between">
